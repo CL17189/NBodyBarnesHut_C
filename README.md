@@ -6,7 +6,7 @@ Efficient 2D N‑body simulation using the Barnes–Hut algorithm in C, with bot
 This project implements a quadtree‑based Barnes–Hut solver to approximate gravitational forces among \(n\) particles in \(O(n\log n)\) time. You can compare performance and memory behavior between AoS and SoA data layouts, and easily tune accuracy and parallelism.
 
 ## Features
-- **\(O(n\log n)\) complexity** via quadtree spatial decomposition  
+- ** $(O(nlog n))$ complexity** via quadtree spatial decomposition  
 - **Barnes–Hut criterion**: configurable opening angle \(\theta_{\max}\) for adaptive force approximation  
 - **AoS & SoA layouts**: switch at compile‑time to evaluate cache locality vs. ease of indexing  
 - **OpenMP support**: multi‑threaded force calculation  
@@ -29,19 +29,22 @@ make            # builds both AoS and SoA executables
 
 # Usage example
 ./nbody_soa \
-  --particles 100000 \
-  --steps 500 \
-  --theta 0.5 \
+  --N 100000 \
+  --filename sim.dat \
+  --nsteps 500 \
+  --delta_t 0.01 \
+  --theta_max 0.5 \
   --threads 8 \
-  --output sim.dat
+  --layout soa
 
 # Options
-# --particles <N>     Number of bodies
-# --steps <T>         Simulation time steps
-# --theta <θ>         Opening angle threshold (0.0 – 1.0)
-# --threads <P>       OpenMP thread count
-# --layout [aos|soa]  Choose data layout (AoS default)
-# --output <file>     Write positions/velocities at each step
+# --N <int>            Number of bodies
+# --filename <string>  Output file name
+# --nsteps <int>       Number of simulation steps
+# --delta_t <float>    Time step size
+# --theta_max <float>  Opening angle threshold (0.0 – 1.0)
+# --threads <int>      OpenMP thread count
+# --layout [aos|soa]   Choose data layout (AoS default)
 
 # Run `./nbody_aos --help` or `./nbody_soa --help` for full list of flags.
 
